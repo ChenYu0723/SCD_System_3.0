@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../SCD_System/.idea/SCD_System.iml" filepath="$PROJECT_DIR$/../SCD_System/.idea/SCD_System.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ITS/SCD_System_2/.idea/SCD_System_2.iml" filepath="$PROJECT_DIR$/../ITS/SCD_System_2/.idea/SCD_System_2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/SCD_System_3.0.iml" filepath="$PROJECT_DIR$/.idea/SCD_System_3.0.iml" />
+    </modules>
+  </component>
+</project>
