@@ -6,10 +6,10 @@
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
-from input_data import load_data, preprocess_data
-from main import my_nn
-from utils import evaluation
-from visualization import plot_flow
+from code.utils.input_data import load_data, preprocess_data
+from code.main import my_nn
+from code.utils.utils import evaluation
+from code.utils.visualization import plot_flow
 
 
 # ==== Hyper Parameters
@@ -75,7 +75,7 @@ print('Last score:',
       'var:{:.4}'.format(var_score))
 
 # ==== visualization
-path = '/Users/yuchen/PycharmProjects/SCD_System_3.0/output/flow_fig'
+path = '/output/flow_fig'
 plot_flow(247, test_out, test_label, path)
 
 '''

@@ -8,7 +8,7 @@ import numpy.linalg as la
 import scipy.sparse as sp
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 import tensorflow as tf
-from input_data import load_data
+from code.utils.input_data import load_data
 
 
 def normalized_adj(adj):

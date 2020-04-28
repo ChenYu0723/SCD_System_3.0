@@ -5,12 +5,11 @@
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
-from input_data import load_data, preprocess_data
-from tgcn import TGCN_Cell
-from gcn import GCN
-from gru import GRUCell
-from utils import evaluation
-from visualization import plot_flow, plot_error
+from code.utils.input_data import load_data, preprocess_data
+from code.tgcn import TGCN_Cell
+from code.gcn import GCN
+from code.gru import GRUCell
+from code.utils.utils import evaluation
 from datetime import datetime
 
 
@@ -173,7 +172,7 @@ if __name__ == '__main__':
     # var = pd.DataFrame(test_result)
     # var.to_csv(path+'/test_result.csv',index = False,header = False)
     # path = 'G:\Program\Pycharm Projects\SCD_System_3.0\output'
-    path = '/Users/yuchen/PycharmProjects/SCD_System_3.0/output'
+    path = '/output'
     # plot_error(train_rmse, train_loss, test_rmse, test_acc, test_mae, test_mape, path)
 
     print('All error:')

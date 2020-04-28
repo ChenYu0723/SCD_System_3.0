@@ -3,12 +3,11 @@
 # @Author  : Chen Yu
 
 import tensorflow as tf
-from tensorflow.contrib.rnn import RNNCell, LSTMCell, BasicRNNCell
-from utils import calculate_laplacian
+from tensorflow.contrib.rnn import RNNCell
+from code.utils.utils import calculate_laplacian
 
 
 class TGCN_Cell(RNNCell):
-# class TGCN_Cell(LSTMCell):
     def __init__(self, adj, od, num_units, num_nodes, input_size=None,
                  act=tf.nn.tanh, reuse=None, norm=False):
         super(TGCN_Cell, self).__init__(_reuse=reuse)

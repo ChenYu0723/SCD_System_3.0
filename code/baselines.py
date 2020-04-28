@@ -7,8 +7,8 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.svm import SVR
 from sklearn.ensemble import RandomForestRegressor
 import lightgbm as lgb
-from input_data import load_data, preprocess_data
-from utils import evaluation
+from code.utils.input_data import load_data, preprocess_data
+from code.utils.utils import evaluation
 import warnings
 warnings.filterwarnings("ignore")
 

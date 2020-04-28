@@ -7,7 +7,7 @@ import pickle
 import numpy as np
 import pandas as pd
 
-os.chdir('..')
+os.chdir('../..')
 
 
 def create_od(filter_hour=None):

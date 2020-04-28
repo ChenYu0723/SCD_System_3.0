@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-#import numpy as np
 import tensorflow as tf
 from tensorflow.contrib.rnn import RNNCell
 from tensorflow.python.platform import tf_logging as logging
