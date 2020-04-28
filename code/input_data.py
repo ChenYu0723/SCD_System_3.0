@@ -10,23 +10,20 @@ from sklearn.model_selection import train_test_split
 os.chdir('..')
 
 
-def load_data(name='sh', filter_hour=None):
-    if name == 'sh':
-        flow_path = "data/station_inFlow.csv"
+def load_data(filter_hour=None):
 
-        adj_path = "data/station_adj.csv"
-        # adj_path = "data/station_adj_dis.csv"
+    flow_path = "data/station_flow/station_inFlow.csv"
 
-        # od_path = "data/od_matrix_all.csv"
-        # od_path = "data/od_matrix_all_nor.csv"
-        od_path = "data/od_matrix_all_nor_0_1.csv"
-    elif name == 'sz':
-        flow_path = "data/sz_speed.csv"
-        adj_path = "data/sz_adj.csv"
+    adj_path = "data/adj_matrix/station_adj.csv"
+    # adj_path = "data/adj_matrix/station_adj_dis.csv"
+
+    # od_path = "data/od_matrix/od_matrix_all.csv"
+    # od_path = "data/od_matrix/od_matrix_all_nor.csv"
+    od_path = "data/od_matrix/od_matrix_all_nor_0_1.csv"
 
     if filter_hour is not None:
-        flow_path = "data/station_flow_filtered/station_inFlow_%d.csv" % filter_hour
-        od_path = "data/od_matrix_filtered/od_matrix_%d_nor.csv" % filter_hour
+        flow_path = "data/station_flow/station_flow_filtered/station_inFlow_%d.csv" % filter_hour
+        od_path = "data/od_matrix/od_matrix_filtered/od_matrix_%d_nor.csv" % filter_hour
 
     station_flow = pd.read_csv(flow_path)
     station_flow = np.mat(station_flow, dtype=np.float32)

@@ -42,7 +42,7 @@ if __name__ == '__main__':
     start_time = datetime.now()
 
     # ==== Hyper Parameters
-    EPOCH = 500
+    EPOCH = 2
     SEQ_LEN = 9
     PRE_LEN = 1
     NUM_UNITS = 64
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     MODEL = 'tgcn'  # tgcn gcn gru
 
     # ==== read data
-    data, adj, od = load_data('sh', filter_hour=12)
+    data, adj, od = load_data()
 
     time_len = data.shape[0]
     num_nodes = data.shape[1]
