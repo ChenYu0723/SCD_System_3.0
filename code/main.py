@@ -5,11 +5,12 @@
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
-from code.utils.input_data import load_data, preprocess_data
-from code.tgcn import TGCN_Cell
-from code.gcn import GCN
-from code.gru import GRUCell
-from code.utils.utils import evaluation
+# from code.utils.input_data import load_data, preprocess_data
+from utils.input_data import load_data, preprocess_data
+from tgcn import TGCN_Cell
+from gcn import GCN
+from gru import GRUCell
+from utils.utils import evaluation
 from datetime import datetime
 
 
@@ -51,22 +52,33 @@ if __name__ == '__main__':
     MODEL = 'tgcn'  # tgcn gcn gru
 
     # ==== read data
-    data, adj, od = load_data()
+    inFlow_data, outFlow_data, adj, od = load_data()
 
-    time_len = data.shape[0]
-    num_nodes = data.shape[1]
+    time_len = inFlow_data.shape[0]
+    num_nodes = inFlow_data.shape[1]
 
     # ==== normalization
     mms = MinMaxScaler()
-    data = mms.fit_transform(data)
+    inFlow_data = mms.fit_transform(inFlow_data)
+    outFlow_data = mms.fit_transform(outFlow_data)
 
-    X_train, Y_train, X_test, Y_test = preprocess_data(data, time_len, TRAIN_RATE, SEQ_LEN, PRE_LEN)
+    X_train_in, Y_train_in, X_test_in, Y_test_in = preprocess_data(inFlow_data, time_len, TRAIN_RATE, SEQ_LEN, PRE_LEN)
+    X_train_out, Y_train_out, X_test_out, Y_test_out = preprocess_data(outFlow_data, time_len, TRAIN_RATE, SEQ_LEN, PRE_LEN)
+    X_train = np.concatenate([X_train_in, X_train_out], axis=1)
+    X_train = X_train.reshape([-1, 2, 9, 322])
+    Y_train = np.concatenate([Y_train_in, Y_train_out], axis=1)
+    Y_train = Y_train.reshape([-1, 2, 1, 322])
+    X_test = np.concatenate([X_test_in, X_test_out], axis=1)
+    X_test = X_test.reshape([-1, 2, 9, 322])
+    Y_test = np.concatenate([Y_test_in, Y_test_out], axis=1)
+    Y_test = Y_test.reshape([-1, 2, 1, 322])
+
     total_batch = int(X_train.shape[0]/BATCH_SIZE)
     training_data_count = len(X_train)
 
     # ==== placeholders
-    inputs = tf.placeholder(tf.float32, shape=[None, SEQ_LEN, num_nodes])
-    labels = tf.placeholder(tf.float32, shape=[None, PRE_LEN, num_nodes])
+    inputs = tf.placeholder(tf.float32, shape=[None, 2, SEQ_LEN, num_nodes])
+    labels = tf.placeholder(tf.float32, shape=[None, 2, PRE_LEN, num_nodes])
 
     # ==== graph weights
     weights = {

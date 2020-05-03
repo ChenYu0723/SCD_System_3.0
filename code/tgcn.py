@@ -4,7 +4,7 @@
 
 import tensorflow as tf
 from tensorflow.contrib.rnn import RNNCell
-from code.utils.utils import calculate_laplacian
+from utils.utils import calculate_laplacian
 
 
 class TGCN_Cell(RNNCell):
@@ -42,10 +42,14 @@ class TGCN_Cell(RNNCell):
         return new_h, new_h
 
     def _gc(self, inputs, state, output_size, graph='adj', bias=.0, scope=None):
+        print('inputs.shape:', inputs.shape)
         # ==== inputs:(-1, num_nodes) -> (-1, num_nodes, 1)
         inputs = tf.expand_dims(inputs, 2)
+        print('inputs.shape:', inputs.shape)
         # ==== state:(-1, 322*64) -> (batch,num_node,gru_units)
+        print('state.shape:', state.shape)
         state = tf.reshape(state, (-1, self._nodes, self._units))
+        print('state.shape:', state.shape)
         # ==== concat
         x_s = tf.concat([inputs, state], axis=2)
         input_size = x_s.get_shape()[2].value

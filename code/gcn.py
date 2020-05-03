@@ -5,7 +5,7 @@ from __future__ import print_function
 import numpy as np
 import tensorflow as tf
 from tensorflow.python.platform import tf_logging as logging
-from code.utils.utils import weight_variable_glorot,calculate_laplacian
+from utils.utils import weight_variable_glorot,calculate_laplacian
 
 flags = tf.app.flags
 FLAGS = flags.FLAGS

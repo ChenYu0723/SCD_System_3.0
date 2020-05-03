@@ -8,7 +8,7 @@ import numpy.linalg as la
 import scipy.sparse as sp
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 import tensorflow as tf
-from code.utils.input_data import load_data
+from utils.input_data import load_data
 
 
 def normalized_adj(adj):
@@ -76,7 +76,7 @@ if __name__ == '__main__':
     # ==== test
     sess = tf.InteractiveSession()
 
-    data, adj, od = load_data()
+    inFlow_data, outFlow_data, adj, od = load_data()
     # print(calculate_laplacian(adj).eval())
     print(calculate_laplacian(od).eval())
     # print(normalized_adj(adj))
