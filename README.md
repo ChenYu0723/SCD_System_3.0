@@ -39,3 +39,7 @@ If you don't have it, please download it. Then put it to "data/raw_data/metroDat
     └── flow_fig
 
 ```
+
+## Paper
+If you want to know the detail of this method, please see the paper from https://www.overleaf.com/read/nbnxpnykqmgg
+And if you want to edit it, please contact me.
