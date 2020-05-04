@@ -1,7 +1,8 @@
 # ITS with GCN method.
 
-Before you run this project, maybe you need metro raw data: metroData_filtered.csv (433MB)
-If you don't have it, please download it. Then put it to "data/raw_data/metroData_filtered.csv"
+Before you run this project, maybe you need metro raw data: metroData_filtered.csv (433MB).
+
+If you don't have it, please download it. Then put it to "data/raw_data/metroData_filtered.csv".
 
 ## Code structure
 ```
@@ -41,5 +42,6 @@ If you don't have it, please download it. Then put it to "data/raw_data/metroDat
 ```
 
 ## Paper
-If you want to know the detail of this method, please see the paper from https://www.overleaf.com/read/nbnxpnykqmgg
+If you want to know the detail of this method, please see the paper from https://www.overleaf.com/read/nbnxpnykqmgg.
+
 And if you want to edit it, please contact me.
