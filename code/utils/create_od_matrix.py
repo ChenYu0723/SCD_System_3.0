@@ -20,7 +20,7 @@ def create_od(filter_hour=None):
     od_matrix_df = pd.DataFrame(0, index=station_id_ls, columns=station_id_ls)
 
     startDay = 20170501
-    endDay = 20170831
+    endDay = 20170731
     startHour = 6
     endHour = 22
 
@@ -70,7 +70,7 @@ def create_od(filter_hour=None):
         od_matrix_df.to_csv('data/od_matrix_filtered/od_matrix_%d.csv' % filter_hour, header=False, index=False)
 
 
-# ==== normalize od matrix
+# ==== normalize matrix
 def normalize(data):
     m = np.mean(data)
     mx = np.max(data)
@@ -80,7 +80,7 @@ def normalize(data):
 
 def normalize_od():
     infile = 'data/od_matrix_all.csv'
-    infile = 'data/od_matrix_filtered/od_matrix_12.csv'
+    # infile = 'data/od_matrix_filtered/od_matrix_12.csv'
     od_df = pd.read_csv(infile, header=None)
     # print(od_df)
     od_mx = np.array(od_df)
@@ -90,13 +90,13 @@ def normalize_od():
     od_df_nor = pd.DataFrame(od_mx_nor)
     print(od_df_nor)
 
-    # od_df_nor.to_csv('data/od_matrix_all_nor.csv', header=False, index=False)
-    od_df_nor.to_csv('data/od_matrix_filtered/od_matrix_12_nor.csv', header=False, index=False)
+    od_df_nor.to_csv('data/od_matrix_all_nor.csv', header=False, index=False)
+    # od_df_nor.to_csv('data/od_matrix_filtered/od_matrix_12_nor.csv', header=False, index=False)
 
 
 def od_to_0_1():
     infile = 'data/od_matrix_all_nor.csv'
-    infile = 'data/od_matrix_filtered/od_matrix_12_nor.csv'
+    # infile = 'data/od_matrix_filtered/od_matrix_12_nor.csv'
     od_df = pd.read_csv(infile, header=None)
     od_mx = np.array(od_df)
     od_mx[od_mx >= .3] = 1
@@ -104,8 +104,8 @@ def od_to_0_1():
     od_mx = od_mx.T
     print(od_mx)
     od_df_0_1 = pd.DataFrame(od_mx)
-    # od_df_0_1.to_csv('data/od_matrix_all_nor_0_1.csv', header=False, index=False)
-    od_df_0_1.to_csv('data/od_matrix_filtered/od_matrix_12_nor_0_1.csv', header=False, index=False)
+    od_df_0_1.to_csv('data/od_matrix_all_nor_0_1.csv', header=False, index=False)
+    # od_df_0_1.to_csv('data/od_matrix_filtered/od_matrix_12_nor_0_1.csv', header=False, index=False)
 
 
 def create_flow(filter_hour):
@@ -126,8 +126,8 @@ if __name__ == '__main__':
     all user count: 102020
     all trip count: 17008644
     '''
-    # create_od(12)
+    # create_od()
     # normalize_od()
-    # od_to_0_1()
+    od_to_0_1()
 
     # create_flow(12)

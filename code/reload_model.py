@@ -32,7 +32,7 @@ num_nodes = data.shape[1]
 mms = MinMaxScaler()
 data = mms.fit_transform(data)
 
-X_train, Y_train, X_test, Y_test = preprocess_data(data, time_len, TRAIN_RATE, SEQ_LEN, PRE_LEN)
+X_train, Y_train, X_test, Y_test = preprocess_data(data, TRAIN_RATE, SEQ_LEN, PRE_LEN)
 total_batch = int(X_train.shape[0] / BATCH_SIZE)
 training_data_count = len(X_train)
 

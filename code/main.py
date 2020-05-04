@@ -2,16 +2,18 @@
 # @Time    : 2019/12/5 19:01
 # @Author  : Chen Yu
 
+import os
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
-# from code.utils.input_data import load_data, preprocess_data
-from utils.input_data import load_data, preprocess_data
-from tgcn import TGCN_Cell
-from gcn import GCN
-from gru import GRUCell
-from utils.utils import evaluation
+from code.utils.input_data import load_data, preprocess_data
+from code.tgcn import TGCN_Cell
+from code.gcn import GCN
+from code.gru import GRUCell
+from code.utils.utils import evaluation
 from datetime import datetime
+
+os.chdir('..')
 
 
 def my_nn(model, _X, _weights, _biases, adj, od, NUM_UNITS, num_nodes, PRE_LEN):
@@ -42,9 +44,9 @@ if __name__ == '__main__':
     start_time = datetime.now()
 
     # ==== Hyper Parameters
-    EPOCH = 2
-    SEQ_LEN = 9
-    PRE_LEN = 1
+    EPOCH = 3
+    SEQ_LEN = 9 * 2
+    PRE_LEN = 1 * 2
     NUM_UNITS = 64
     TRAIN_RATE = .8
     LR = .01
@@ -62,23 +64,25 @@ if __name__ == '__main__':
     inFlow_data = mms.fit_transform(inFlow_data)
     outFlow_data = mms.fit_transform(outFlow_data)
 
-    X_train_in, Y_train_in, X_test_in, Y_test_in = preprocess_data(inFlow_data, time_len, TRAIN_RATE, SEQ_LEN, PRE_LEN)
-    X_train_out, Y_train_out, X_test_out, Y_test_out = preprocess_data(outFlow_data, time_len, TRAIN_RATE, SEQ_LEN, PRE_LEN)
+    X_train_in, Y_train_in, X_test_in, Y_test_in = preprocess_data(inFlow_data, TRAIN_RATE, int(SEQ_LEN / 2), int(PRE_LEN / 2))
+    X_train_out, Y_train_out, X_test_out, Y_test_out = preprocess_data(outFlow_data, TRAIN_RATE, int(SEQ_LEN / 2), int(PRE_LEN / 2))
+
     X_train = np.concatenate([X_train_in, X_train_out], axis=1)
-    X_train = X_train.reshape([-1, 2, 9, 322])
+    # print('X_train.shape:', X_train.shape)
+    # X_train = X_train.reshape([-1, 2, 9, 322])
     Y_train = np.concatenate([Y_train_in, Y_train_out], axis=1)
-    Y_train = Y_train.reshape([-1, 2, 1, 322])
+    # Y_train = Y_train.reshape([-1, 2, 1, 322])
     X_test = np.concatenate([X_test_in, X_test_out], axis=1)
-    X_test = X_test.reshape([-1, 2, 9, 322])
+    # X_test = X_test.reshape([-1, 2, 9, 322])
     Y_test = np.concatenate([Y_test_in, Y_test_out], axis=1)
-    Y_test = Y_test.reshape([-1, 2, 1, 322])
+    # Y_test = Y_test.reshape([-1, 2, 1, 322])
 
     total_batch = int(X_train.shape[0]/BATCH_SIZE)
     training_data_count = len(X_train)
 
     # ==== placeholders
-    inputs = tf.placeholder(tf.float32, shape=[None, 2, SEQ_LEN, num_nodes])
-    labels = tf.placeholder(tf.float32, shape=[None, 2, PRE_LEN, num_nodes])
+    inputs = tf.placeholder(tf.float32, shape=[None, SEQ_LEN, num_nodes])
+    labels = tf.placeholder(tf.float32, shape=[None, PRE_LEN, num_nodes])
 
     # ==== graph weights
     weights = {
@@ -163,7 +167,7 @@ if __name__ == '__main__':
     save_path = saver.save(sess, 'model/tgcn_net.ckpt')
     print(("Save to path: ", save_path))
 
-    # ==== score
+    # ==== best score
     index = test_rmse.index(np.min(test_rmse))
     print('Best score epoch:', index)
     print('Best score:',
@@ -174,20 +178,14 @@ if __name__ == '__main__':
           'r2:{:.4}'.format(test_r2[index]),
           'var:{:.4}'.format(test_var[index]))
 
-    # ==== visualization
+    # ==== all score
     b = int(len(batch_rmse) / total_batch)
     batch_rmse1 = [i for i in batch_rmse]
     train_rmse = [(sum(batch_rmse1[i * total_batch:(i + 1) * total_batch]) / total_batch) for i in range(b)]
     batch_loss1 = [i for i in batch_loss]
     train_loss = [(sum(batch_loss1[i * total_batch:(i + 1) * total_batch]) / total_batch) for i in range(b)]
 
-    # var = pd.DataFrame(test_result)
-    # var.to_csv(path+'/test_result.csv',index = False,header = False)
-    # path = 'G:\Program\Pycharm Projects\SCD_System_3.0\output'
-    path = '/output'
-    # plot_error(train_rmse, train_loss, test_rmse, test_acc, test_mae, test_mape, path)
-
-    print('All error:')
+    print('All score:')
     print(train_rmse)
     print(train_loss)
     print(test_rmse)
@@ -197,3 +195,4 @@ if __name__ == '__main__':
 
     end_time = datetime.now()
     print(end_time - start_time)
+

@@ -56,7 +56,7 @@ if __name__ == '__main__':
         mms = MinMaxScaler()
         station_data = mms.fit_transform(station_data)
 
-        X_train, Y_train, X_test, Y_test = preprocess_data(station_data, time_len, TRAIN_RATE, SEQ_LEN, PRE_LEN)
+        X_train, Y_train, X_test, Y_test = preprocess_data(station_data, TRAIN_RATE, SEQ_LEN, PRE_LEN)
         X_train = X_train.reshape(-1, SEQ_LEN)
         X_test = X_test.reshape(-1, SEQ_LEN)
         Y_train = Y_train.reshape(-1)
